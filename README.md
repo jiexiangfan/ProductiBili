@@ -1,4 +1,4 @@
-# ProductivitiBili
+# ProductiBili
 
 Productivity extension tool for Google Chrome that hide recommendations and/or other sections in BiliBili video streaming website.
 
