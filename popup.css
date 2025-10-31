@@ -59,6 +59,28 @@ body {
   font-weight: 500;
 }
 
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-text {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: right;
+  transition: color 0.3s ease;
+}
+
+.status-text.hidden {
+  color: #ef4444;
+}
+
+.status-text.visible {
+  color: #10b981;
+}
+
 /* Toggle Switch Styles */
 .switch {
   position: relative;

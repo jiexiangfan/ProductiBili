@@ -29,11 +29,31 @@ function loadSettings() {
 }
 
 // Set the toggle switch state based on the selected option
-// Checked = show, Unchecked = hide
+// Checked = hide (blocking), Unchecked = show (not blocking)
 function setToggleState(section, selectedOption) {
   const toggle = document.querySelector(`input[data-section="${section}"]`);
+  const statusText = document.querySelector(`span[data-status="${section}"]`);
+
   if (toggle) {
-    toggle.checked = selectedOption === "show";
+    // Reverse logic: checked = hide, unchecked = show
+    toggle.checked = selectedOption === "hide";
+  }
+
+  if (statusText) {
+    updateStatusText(statusText, selectedOption);
+  }
+}
+
+// Update the status text based on the current state
+function updateStatusText(statusElement, state) {
+  if (state === "hide") {
+    statusElement.textContent = "Hidden";
+    statusElement.classList.remove("visible");
+    statusElement.classList.add("hidden");
+  } else {
+    statusElement.textContent = "Showing";
+    statusElement.classList.remove("hidden");
+    statusElement.classList.add("visible");
   }
 }
 
@@ -42,7 +62,18 @@ function setupEventListeners() {
   sectionsToHandle.forEach((section) => {
     const toggle = document.querySelector(`input[data-section="${section}"]`);
     if (toggle) {
-      toggle.addEventListener("change", () => saveAndApplySettings());
+      toggle.addEventListener("change", () => {
+        const statusText = document.querySelector(
+          `span[data-status="${section}"]`
+        );
+        const newState = toggle.checked ? "hide" : "show";
+
+        if (statusText) {
+          updateStatusText(statusText, newState);
+        }
+
+        saveAndApplySettings();
+      });
     }
   });
 }
@@ -51,8 +82,8 @@ function setupEventListeners() {
 function saveAndApplySettings() {
   const settings = sectionsToHandle.reduce((acc, section) => {
     const toggle = document.querySelector(`input[data-section="${section}"]`);
-    // Checked = show, Unchecked = hide
-    acc[section] = toggle && toggle.checked ? "show" : "hide";
+    // Reverse logic: Checked = hide, Unchecked = show
+    acc[section] = toggle && toggle.checked ? "hide" : "show";
     return acc;
   }, {});
 
