@@ -23,38 +23,36 @@ function loadSettings() {
     const settings = result.bilibiliSettings || {};
     sectionsToHandle.forEach((section) => {
       const selectedOption = settings[section] || "show";
-      setRadioButtonState(section, selectedOption);
+      setToggleState(section, selectedOption);
     });
   });
 }
 
-// Set the radio button state based on the selected option
-function setRadioButtonState(section, selectedOption) {
-  const radioButton = document.querySelector(
-    `input[name="${section}"][value="${selectedOption}"]`
-  );
-  if (radioButton) {
-    radioButton.checked = true;
+// Set the toggle switch state based on the selected option
+// Checked = show, Unchecked = hide
+function setToggleState(section, selectedOption) {
+  const toggle = document.querySelector(`input[data-section="${section}"]`);
+  if (toggle) {
+    toggle.checked = selectedOption === "show";
   }
 }
 
-// Set up event listeners for radio buttons to save and apply settings
+// Set up event listeners for toggle switches to save and apply settings
 function setupEventListeners() {
   sectionsToHandle.forEach((section) => {
-    const radios = document.querySelectorAll(`input[name="${section}"]`);
-    radios.forEach((radio) => {
-      radio.addEventListener("change", () => saveAndApplySettings());
-    });
+    const toggle = document.querySelector(`input[data-section="${section}"]`);
+    if (toggle) {
+      toggle.addEventListener("change", () => saveAndApplySettings());
+    }
   });
 }
 
 // Save the selected options and apply the settings to the current tab
 function saveAndApplySettings() {
   const settings = sectionsToHandle.reduce((acc, section) => {
-    const selectedOption = document.querySelector(
-      `input[name="${section}"]:checked`
-    ).value;
-    acc[section] = selectedOption;
+    const toggle = document.querySelector(`input[data-section="${section}"]`);
+    // Checked = show, Unchecked = hide
+    acc[section] = toggle && toggle.checked ? "show" : "hide";
     return acc;
   }, {});
 

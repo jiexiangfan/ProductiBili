@@ -2,81 +2,90 @@
 <html>
 
 <head>
-    <title>ProductivitiBili</title>
+    <title>ProductiBili</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
-    <h1>ProductivitiBili</h1>
-
-    <div class="section">
-        <h3>Home Feed</h3>
-        <label>
-            <input type="radio" name="bilibiliHome" value="show" checked> Show
-        </label>
-        <label>
-            <input type="radio" name="bilibiliHome" value="hide"> Hide
-        </label>
+    <div class="header">
+        <h1>ProductiBili</h1>
+        <p class="subtitle">Control your distractions</p>
     </div>
 
-    <div class="section">
-        <h3>Comments</h3>
-        <label>
-            <input type="radio" name="bilibiliComments" value="show" checked> Show
-        </label>
-        <label>
-            <input type="radio" name="bilibiliComments" value="hide"> Hide
-        </label>
+    <div class="settings-container">
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Home Feed</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="bilibiliHome" data-section="bilibiliHome">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Comments</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="bilibiliComments" data-section="bilibiliComments">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Recommendation Sidebar</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="bilibiliSidebar" data-section="bilibiliSidebar">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Up Next (end of video)</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="bilibiliUpNext" data-section="bilibiliUpNext">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Subscriptions Feed</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="bilibiliSubscription" data-section="bilibiliSubscription">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Trending</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="bilibiliTrending" data-section="bilibiliTrending">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-label">
+                <span>Danmaku</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="bilibiliDanmuku" data-section="bilibiliDanmuku">
+                <span class="slider"></span>
+            </label>
+        </div>
     </div>
 
-    <div class="section">
-        <h3>Recommendation Sidebar</h3>
-        <label>
-            <input type="radio" name="bilibiliSidebar" value="show" checked> Show
-        </label>
-        <label>
-            <input type="radio" name="bilibiliSidebar" value="hide"> Hide
-        </label>
-    </div>
-
-    <div class="section">
-        <h3>Up next (end of video)</h3>
-        <label>
-            <input type="radio" name="bilibiliUpNext" value="show" checked> Show
-        </label>
-        <label>
-            <input type="radio" name="bilibiliUpNext" value="hide"> Hide
-        </label>
-    </div>
-
-    <div class="section">
-        <h3>Subscriptions feed</h3>
-        <label>
-            <input type="radio" name="bilibiliSubscription" value="show" checked> Show
-        </label>
-        <label>
-            <input type="radio" name="bilibiliSubscription" value="hide"> Hide
-        </label>
-    </div>
-
-    <div class="section">
-        <h3>Trending</h3>
-        <label>
-            <input type="radio" name="bilibiliTrending" value="show" checked> Show
-        </label>
-        <label>
-            <input type="radio" name="bilibiliTrending" value="hide"> Hide
-        </label>
-    </div>
-
-    <div class="section">
-        <h3>Danmaku</h3>
-        <label>
-            <input type="radio" name="bilibiliDanmuku" value="show" checked> Show
-        </label>
-        <label>
-            <input type="radio" name="bilibiliDanmuku" value="hide"> Hide
-        </label>
+    <div class="footer">
+        <small>Toggle off to hide distracting elements</small>
     </div>
 
     <script src="popup.js"></script>
