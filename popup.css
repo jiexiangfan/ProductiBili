@@ -77,7 +77,7 @@ body {
   color: #ef4444;
 }
 
-.status-text.visible {
+.status-text.showing {
   color: #10b981;
 }
 

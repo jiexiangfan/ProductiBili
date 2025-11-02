@@ -48,12 +48,12 @@ function setToggleState(section, selectedOption) {
 function updateStatusText(statusElement, state) {
   if (state === "hide") {
     statusElement.textContent = "Hidden";
-    statusElement.classList.remove("visible");
+    statusElement.classList.remove("showing");
     statusElement.classList.add("hidden");
   } else {
     statusElement.textContent = "Showing";
     statusElement.classList.remove("hidden");
-    statusElement.classList.add("visible");
+    statusElement.classList.add("showing");
   }
 }
 
