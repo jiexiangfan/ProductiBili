@@ -50,21 +50,56 @@ const sections = {
     // ".channel-entry-more__link",
   ],
   bilibiliDanmuku: [".bpx-player-row-dm-wrap"],
+  // NEW FEATURE 1: Video Thumbnails
+  // TODO: Update these selectors to match actual Bilibili thumbnail elements
+  bilibiliThumbnails: [
+    ".bili-video-card__image", // Common video thumbnail class
+    ".video-card__cover", // Video card cover
+    ".pic-box", // Picture box
+    ".bili-live-card__cover", // Live card cover
+    "img.cover", // Generic cover images
+    ".van-image", // Van image component
+    // Add more selectors as needed - you can update these later
+  ],
 };
 
 // Apply existing settings to the current tab
-chrome.storage.sync.get(["bilibiliSettings"], function (result) {
-  const settings = result.bilibiliSettings || {};
-  applySettings(settings);
-});
+chrome.storage.sync.get(
+  ["bilibiliSettings", "extensionEnabled"],
+  function (result) {
+    const settings = result.bilibiliSettings || {};
+    const extensionEnabled =
+      result.extensionEnabled !== undefined ? result.extensionEnabled : true; // Default to enabled
+
+    console.log("Initial load - Extension enabled:", extensionEnabled);
+    console.log("Initial load - Settings:", settings);
+
+    if (extensionEnabled) {
+      applySettings(settings);
+    } else {
+      // If disabled, remove all CSS to show everything normally
+      removeAllStyles();
+    }
+  }
+);
 
 // Listen for messages from the popup to apply settings
-// console.log("Content script loaded, waiting for settings...");
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  // console.log("Received message:", request);
+  console.log("Content script received message:", request);
   if (request.action === "applySettings") {
     const settings = request.settings;
-    applySettings(settings);
+    const extensionEnabled =
+      request.extensionEnabled !== undefined ? request.extensionEnabled : true;
+
+    console.log("Extension enabled status:", extensionEnabled);
+
+    if (extensionEnabled) {
+      console.log("Applying settings:", settings);
+      applySettings(settings);
+    } else {
+      console.log("Extension disabled - removing all styles");
+      removeAllStyles();
+    }
     sendResponse({ status: "Settings applied" });
   }
   return true; // Will keep the message channel open for sendResponse
@@ -88,6 +123,8 @@ function generateCSS(selector, setting) {
   const styleMap = {
     hide: `display: none !important;`,
     blur: `filter: blur(5px) !important; display: initial !important;`,
+    // NEW: Blackout mode for thumbnails - shows black rectangle
+    blackout: `filter: brightness(0) !important; display: initial !important;`,
     show: `filter: none !important; display: initial !important;`, // Ensure visibility is enforced
   };
   return `${selector} { ${styleMap[setting] || ""} }\n`;
@@ -104,4 +141,15 @@ function injectStyles(css) {
     document.head.appendChild(styleElement);
   }
   styleElement.textContent = css;
+}
+
+// Remove all custom styles (when extension is disabled)
+function removeAllStyles() {
+  const styleElement = document.getElementById("custom-bilibili-styles");
+  if (styleElement) {
+    console.log("Removing custom styles element");
+    styleElement.remove();
+  } else {
+    console.log("No custom styles element found to remove");
+  }
 }
